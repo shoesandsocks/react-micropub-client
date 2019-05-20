@@ -6,7 +6,7 @@ import MicropubComposer from './components/MicropubComposer';
 import Login from './components/Login';
 
 function App() {
-  const [isAuthed, setIsAuthed] = useState(false);
+  const [isAuthed, setIsAuthed] = useState(true);
 
   useEffect(() => {
     checkForCode(window.location.search, setIsAuthed);

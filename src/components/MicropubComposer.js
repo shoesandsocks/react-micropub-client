@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Wrap, Btn, Form } from '../styled_parts';
+import { ComposerWrap, Btn, Form } from '../styled_parts';
 import Title from './Title';
 import Body from './Body';
 import Tags from './Tags';
@@ -46,7 +46,7 @@ const MicropubComposer = () => {
   }, [tags, arrayOfTags]);
 
   return (
-    <Wrap>
+    <ComposerWrap>
       <Form onSubmit={handlePost}>
         <Title text={title} change={setTitle} />
         <Body text={body} change={setBody} />
@@ -60,8 +60,8 @@ const MicropubComposer = () => {
           Submit
         </Btn>
       </Form>
-      <Output body={body} />
-    </Wrap>
+      <Output body={body} title={title} arrayOfTags={arrayOfTags} />
+    </ComposerWrap>
   );
 };
 

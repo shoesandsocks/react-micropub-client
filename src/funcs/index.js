@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios';
 
 // TODO: configurable?
@@ -69,4 +70,14 @@ export const checkForCode = (params, setIsAuthed) => {
   } else {
     return undefined;
   }
+};
+
+export const renderTags = arr => {
+  if (!arr) {
+    return null;
+  }
+  if (arr.length < 1) {
+    return null;
+  }
+  return arr.map(tag => <span>{tag}, </span>);
 };

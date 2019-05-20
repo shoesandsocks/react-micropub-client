@@ -2,13 +2,19 @@ import styled from 'styled-components';
 
 const blueGradient = 'linear-gradient(0deg, #369 50%, #389 100%)';
 
-export const Wrap = styled.div`
+export const ComposerWrap = styled.div`
   padding: 3rem;
   background: ${blueGradient};
   min-height: 95vh;
+  display: flex;
+  flex-flow: column nowrap;
+  transition: 0.6s;
+  @media screen and (min-width: 1100px) {
+    flex-flow: row nowrap;
+  }
 `;
 
-export const LoginWrap = styled(Wrap)`
+export const LoginWrap = styled(ComposerWrap)`
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
@@ -75,10 +81,7 @@ export const OutputWrap = styled(Form)`
   & div {
     min-height: 15vh;
     padding: 0.5rem;
-    width: 100%;
     background: #eee;
-    color: #2d2d2d;
-    font: 1rem Arial, Helvetica;
   }
 `;
 
@@ -91,7 +94,7 @@ export const InputLabel = styled.label`
 export const InputWrap = styled.input`
   padding: 0.5rem;
   background: #eee;
-  /* width: 100%; */
+  width: 100%;
   font: 1rem Arial, Helvetica;
   margin-bottom: 0.5rem;
 `;
@@ -124,4 +127,30 @@ export const TagSpan = styled.span`
   border-radius: 0.75rem;
   padding: 0.125rem 1rem 0.25rem 1rem;
   margin: 0.25rem 0.25rem 0.25rem 0;
+`;
+
+export const PreviewTitle = styled.h1`
+  font-size: 1.5rem;
+  margin: 0;
+  color: #2d2d2d;
+  background: #eee;
+  border-bottom: 1x solid #ccc;
+  padding: 0;
+`;
+
+export const PreviewBody = styled.div`
+  width: 95%;
+  margin: 0.5rem auto 0 auto;
+  padding: 0;
+  /* border: 1px solid #999; */
+  & p {
+    margin: 0.125rem;
+  }
+`;
+
+export const PreviewTags = styled.div`
+  height: 1.25rem;
+  background: white;
+  color: #2d2d2d;
+  font-size: 0.825rem;
 `;
