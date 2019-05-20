@@ -4,6 +4,7 @@ import { Wrap, Btn, Form } from '../styled_parts';
 import Title from './Title';
 import Body from './Body';
 import Tags from './Tags';
+import Output from './Output';
 
 import { post, processTags } from '../funcs';
 
@@ -59,6 +60,7 @@ const MicropubComposer = () => {
           Submit
         </Btn>
       </Form>
+      <Output body={body} />
     </Wrap>
   );
 };

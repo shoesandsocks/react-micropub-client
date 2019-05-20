@@ -1,12 +1,19 @@
 import React from 'react';
 import marked from 'marked';
 
-import { OutputWrap } from '../styled_parts';
+import { OutputWrap, InputLabel } from '../styled_parts';
 
 const Output = ({ body }) => {
   return (
     <OutputWrap>
-      <div dangerouslySetInnerHTML={{ __html: marked(body) }} />
+      <InputLabel id="preview-id" htmlFor="preview">
+        Preview
+      </InputLabel>
+      <div
+        id="preview"
+        aria-labelledby="preview-id"
+        dangerouslySetInnerHTML={{ __html: marked(body) }}
+      />
     </OutputWrap>
   );
 };

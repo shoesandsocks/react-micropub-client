@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Output from './Output';
-
-import { InputTextarea, InputLabel } from '../styled_parts';
+import { InputTextarea, InputLabel, BodyWrap } from '../styled_parts';
 
 const Body = ({ text, change }) => {
   const handleChange = e => change(e.target.value);
   return (
-    <React.Fragment>
+    <BodyWrap>
       <InputLabel id="body-label" htmlFor="body">
         Post content
       </InputLabel>
@@ -21,10 +19,9 @@ const Body = ({ text, change }) => {
         value={text}
         onChange={handleChange}
         rows={10}
+        placeholder="markdown?"
       />
-
-      <Output body={text} />
-    </React.Fragment>
+    </BodyWrap>
   );
 };
 

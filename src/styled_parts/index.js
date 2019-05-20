@@ -8,25 +8,78 @@ export const Wrap = styled.div`
   min-height: 95vh;
 `;
 
-export const OutputWrap = styled.div`
-  padding: 0.5rrem;
-  background: #eee;
-  min-height: 7vh;
-  color: #2d2d2d;
-  width: 80%;
-  margin: 2rem auto;
+export const LoginWrap = styled(Wrap)`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+export const LoginForm = styled.form`
+  border: 1px solid #eee;
+  border-radius: 4px;
+  width: 380px;
+  padding: 3rem;
+  font-size: 1.5rem;
+  color: #eee;
+  & label {
+    display: block;
+    margin: 0.25rem auto;
+    width: 100%;
+  }
+  & input {
+    display: block;
+    inset: none;
+    color: #2d2d2d;
+    font-size: 1.125rem;
+    padding-left: 0.5rem;
+    height: 1.75rem;
+    width: 100%;
+  }
+  & button {
+    display: block;
+    margin-top: 1rem;
+    background: none;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    color: #eee;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.5rem 1rem 0.625rem 1rem;
+    transition: 0.35s;
+    &:hover {
+      background: #eee;
+      color: #2d2d2d;
+    }
+    /* width: 100%; */
+  }
 `;
 
 export const Form = styled.form`
-  max-width: 60vw;
-  min-width: 380px;
+  width: 380px;
   background: linear-gradient(
     10deg,
     rgba(0, 0, 0, 0.3) 60%,
     rgba(0, 0, 0, 0.05) 100%
   );
   padding: 3rem;
-  margin: 0 auto;
+  margin: 0 auto 3rem auto;
+`;
+
+export const BodyWrap = styled.div`
+  width: 100%;
+  min-height: 7vh;
+`;
+
+export const OutputWrap = styled(Form)`
+  & div {
+    min-height: 15vh;
+    padding: 0.5rem;
+    width: 100%;
+    background: #eee;
+    color: #2d2d2d;
+    font: 1rem Arial, Helvetica;
+  }
 `;
 
 export const InputLabel = styled.label`
@@ -38,16 +91,16 @@ export const InputLabel = styled.label`
 export const InputWrap = styled.input`
   padding: 0.5rem;
   background: #eee;
-  width: 100%;
+  /* width: 100%; */
   font: 1rem Arial, Helvetica;
   margin-bottom: 0.5rem;
 `;
 
 export const InputTextarea = styled.textarea`
-  padding: 0.55rem;
+  padding: 0.5rem;
   background: #eee;
   width: 100%;
-  font: 1rem Arial, Helvetica;
+  font: 1rem Courier, mono;
   margin-bottom: 0.5rem;
 `;
 

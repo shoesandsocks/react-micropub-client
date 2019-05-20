@@ -42,6 +42,25 @@ it('receives splits from tag component', async () => {
   expect(savedTagsDiv.lastChild).toEqual(juiceEle);
 });
 
+it('renders markdown from input to output', () => {
+  const firstMarkdownSample = `
+![a dog](https://puppyrey.online/static/2019-05-18-60975-igla-teh5-d48d71ada59dd27af6518e685b66a52f-2d27f.jpg)
+`;
+  const secondMarkdownSample = `
+![a cat](https://puppyrey.online/static/2019-05-18-60975-igla-teh5-d48d71ada59dd27af6518e685b66a52f-2d27f.jpg)
+`;
+  const { getByAltText, getByLabelText } = render(<MicropubComposer />);
+  const body = getByLabelText('Post content');
+  fireEvent.change(body, {
+    target: { value: firstMarkdownSample },
+  });
+  expect(getByAltText('a dog')).toBeInTheDocument();
+  fireEvent.change(body, {
+    target: { value: secondMarkdownSample },
+  });
+  expect(getByAltText('a cat')).toBeInTheDocument();
+});
+
 it('clears fields on successful Submit', async () => {
   const { getByPlaceholderText, getByLabelText, getByText } = render(
     <MicropubComposer />,

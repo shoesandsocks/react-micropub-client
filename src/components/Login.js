@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Wrap } from '../styled_parts';
+import { LoginWrap, LoginForm } from '../styled_parts';
 
 import { getAuthed } from '../funcs';
 
@@ -21,8 +21,8 @@ function Login() {
       .catch(err => console.log(err));
   };
   return (
-    <Wrap>
-      <form onSubmit={handleAuth}>
+    <LoginWrap>
+      <LoginForm onSubmit={handleAuth}>
         <label id="me-label" htmlFor="me">
           Website
         </label>
@@ -39,8 +39,8 @@ function Login() {
         <button type="button" onClick={handleAuth} value="Submit">
           log me in
         </button>
-      </form>
-    </Wrap>
+      </LoginForm>
+    </LoginWrap>
   );
 }
 
