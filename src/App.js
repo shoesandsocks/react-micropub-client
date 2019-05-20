@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import MicropubComposer from './MicropubComposer';
+import { checkForCode } from './funcs';
+
+import MicropubComposer from './components/MicropubComposer';
+import Login from './components/Login';
 
 function App() {
+  const [isAuthed, setIsAuthed] = useState(false);
+
+  useEffect(() => {
+    checkForCode(window.location.search, setIsAuthed);
+  }, []);
+
   return (
     <div className="App">
-      <MicropubComposer />
+      {isAuthed ? <MicropubComposer /> : <Login setIsAuthed={setIsAuthed} />}
     </div>
   );
 }

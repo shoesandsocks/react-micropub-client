@@ -8,6 +8,15 @@ export const Wrap = styled.div`
   min-height: 95vh;
 `;
 
+export const OutputWrap = styled.div`
+  padding: 0.5rrem;
+  background: #eee;
+  min-height: 7vh;
+  color: #2d2d2d;
+  width: 80%;
+  margin: 2rem auto;
+`;
+
 export const Form = styled.form`
   max-width: 60vw;
   min-width: 380px;
