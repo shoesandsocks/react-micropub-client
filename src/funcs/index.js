@@ -17,8 +17,22 @@ export const post = obj => {
   return axios.post(`${url}/create`, temporaryTransform);
 };
 
-export const processTags = (tags, setTags, arrayOfTags, setArrayOfTags) => {
-  if (tags.indexOf(',') > -1) {
+export const processTags = (
+  tags,
+  setTags,
+  arrayOfTags,
+  setArrayOfTags,
+  enterWasPressed = false,
+) => {
+  if (enterWasPressed) {
+    const newTagToSave = tags.trim();
+    const currentSavedTags = [...arrayOfTags];
+    const alreadyExists = currentSavedTags.indexOf(newTagToSave) > -1;
+    if (newTagToSave !== '' && !alreadyExists) {
+      setArrayOfTags(currentSavedTags.concat([newTagToSave]));
+    }
+    return setTags([]);
+  } else if (tags.indexOf(',') > -1) {
     const currentSavedTags = [...arrayOfTags];
     const [newTagToSave, ...remainder] = tags.split(',');
 
@@ -79,5 +93,5 @@ export const renderTags = arr => {
   if (arr.length < 1) {
     return null;
   }
-  return arr.map(tag => <span>{tag}, </span>);
+  return arr.map(tag => <span key={tag}>{tag}, </span>);
 };

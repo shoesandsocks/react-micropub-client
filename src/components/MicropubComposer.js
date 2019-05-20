@@ -6,7 +6,7 @@ import Body from './Body';
 import Tags from './Tags';
 import Output from './Output';
 
-import { post, processTags } from '../funcs';
+import { post } from '../funcs';
 
 const MicropubComposer = () => {
   const [title, setTitle] = useState('');
@@ -41,16 +41,17 @@ const MicropubComposer = () => {
       });
   };
 
-  useEffect(() => {
-    processTags(tags, setTags, arrayOfTags, setArrayOfTags);
-  }, [tags, arrayOfTags]);
-
   return (
     <ComposerWrap>
       <Form onSubmit={handlePost}>
         <Title text={title} change={setTitle} />
         <Body text={body} change={setBody} />
-        <Tags text={tags} arrayOfTags={arrayOfTags} change={setTags} />
+        <Tags
+          tags={tags}
+          arrayOfTags={arrayOfTags}
+          setTags={setTags}
+          setArrayOfTags={setArrayOfTags}
+        />
         <Btn
           type="button"
           onClick={handlePost}

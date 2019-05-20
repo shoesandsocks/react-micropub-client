@@ -117,10 +117,11 @@ export const Btn = styled.button`
 `;
 
 export const TagBar = styled.div`
-  height: 2rem;
+  min-height: 2rem;
 `;
 
 export const TagSpan = styled.span`
+  display: inline-block;
   font-size: 0.825rem;
   color: #2d2d2d;
   background-color: #eee;
