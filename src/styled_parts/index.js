@@ -4,7 +4,7 @@ const blueGradient = 'linear-gradient(0deg, #369 50%, #389 100%)';
 
 export const Wrap = styled.div`
   padding: 3rem;
-  background: ${({ blue }) => (blue ? blueGradient : '#eee')};
+  background: ${blueGradient};
   min-height: 95vh;
 `;
 

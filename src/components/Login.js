@@ -21,7 +21,7 @@ function Login() {
       .catch(err => console.log(err));
   };
   return (
-    <Wrap blue>
+    <Wrap>
       <form onSubmit={handleAuth}>
         <label id="me-label" htmlFor="me">
           Website

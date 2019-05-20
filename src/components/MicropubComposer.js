@@ -45,7 +45,7 @@ const MicropubComposer = () => {
   }, [tags, arrayOfTags]);
 
   return (
-    <Wrap blue>
+    <Wrap>
       <Form onSubmit={handlePost}>
         <Title text={title} change={setTitle} />
         <Body text={body} change={setBody} />
