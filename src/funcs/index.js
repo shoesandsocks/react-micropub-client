@@ -31,7 +31,7 @@ export const processTags = (
     if (newTagToSave !== '' && !alreadyExists) {
       setArrayOfTags(currentSavedTags.concat([newTagToSave]));
     }
-    return setTags([]);
+    return setTags('');
   } else if (tags.indexOf(',') > -1) {
     const currentSavedTags = [...arrayOfTags];
     const [newTagToSave, ...remainder] = tags.split(',');

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { LoginWrap, LoginForm } from '../styled_parts';
+import { LoginWrap, LoginLabel, LoginForm } from '../styled_parts';
 
 import { getAuthed } from '../funcs';
 
@@ -23,9 +23,18 @@ function Login() {
   return (
     <LoginWrap>
       <LoginForm onSubmit={handleAuth}>
-        <label id="me-label" htmlFor="me">
+        <LoginLabel id="me-label" htmlFor="me">
           Website
-        </label>
+          <span>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://indielogin.com/setup"
+            >
+              what's this?
+            </a>
+          </span>
+        </LoginLabel>
         <input
           aria-labelledby="me-label"
           id="me"

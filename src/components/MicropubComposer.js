@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { ComposerWrap, Btn, Form } from '../styled_parts';
 import Title from './Title';
@@ -23,8 +23,6 @@ const MicropubComposer = () => {
     // send to server so it can post to the endpoint it already knows about
     post({ title, body, arrayOfTags })
       .then(response => {
-        // TODO: extract to a sep func?
-
         if (response.status === 200) {
           // TODO: get URL from msg to message div
           [setTitle, setBody, setTags].forEach(func => func(''));

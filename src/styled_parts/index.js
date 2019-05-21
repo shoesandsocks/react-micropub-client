@@ -1,6 +1,23 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const blueGradient = 'linear-gradient(0deg, #369 50%, #389 100%)';
+
+const flyIn = keyframes`
+  0% {
+    transform: translateX(4000px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+`;
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
 
 export const ComposerWrap = styled.div`
   padding: 3rem;
@@ -14,11 +31,35 @@ export const ComposerWrap = styled.div`
   }
 `;
 
-export const LoginWrap = styled(ComposerWrap)`
+export const LoginWrap = styled.div`
+  padding: 0 2rem;
+  background: ${blueGradient};
+  min-height: 95vh;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: flex-start;
+  /* transition: .2s; */
+  animation: ${flyIn} 0.4s linear;
+`;
+
+export const LoginLabel = styled.label`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
   align-items: center;
+  & span {
+    font-size: 0.825rem;
+    opacity: 0;
+    animation: ${fadeIn} 0.5s linear 4s forwards;
+  }
+  & a {
+    color: #eee;
+    &:visited,
+    :hover {
+      color: #eee;
+    }
+  }
 `;
 
 export const LoginForm = styled.form`
@@ -28,11 +69,6 @@ export const LoginForm = styled.form`
   padding: 3rem;
   font-size: 1.5rem;
   color: #eee;
-  & label {
-    display: block;
-    margin: 0.25rem auto;
-    width: 100%;
-  }
   & input {
     display: block;
     inset: none;
@@ -128,6 +164,7 @@ export const TagSpan = styled.span`
   border-radius: 0.75rem;
   padding: 0.125rem 1rem 0.25rem 1rem;
   margin: 0.25rem 0.25rem 0.25rem 0;
+  cursor: crosshair;
 `;
 
 export const PreviewTitle = styled.h1`
