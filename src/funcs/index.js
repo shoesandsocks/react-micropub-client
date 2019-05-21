@@ -63,7 +63,7 @@ export const getAuthed = address => {
   });
 };
 
-export const checkForCode = (params, setIsAuthed) => {
+export const checkForCode = (params, setIsAuthed, setCheckingAuth) => {
   const needed = ['code', 'me', 'state'];
   const urlParams = new URLSearchParams(params);
   if (needed.every(param => urlParams.has(param))) {
@@ -75,13 +75,22 @@ export const checkForCode = (params, setIsAuthed) => {
     axios.get(`${authServerCb}?code=${code}`).then(res => {
       const { err } = res.data;
       if (err) {
+        //
+        setCheckingAuth(false);
+        //
         return undefined;
       } else {
         setIsAuthed(true);
+        //
+        setCheckingAuth(false);
+        //
         window.history.pushState(null, document.title, '/');
       }
     });
   } else {
+    //
+    setCheckingAuth(false);
+    //
     return undefined;
   }
 };
