@@ -27,22 +27,3 @@ it('converts a param code and toggles isAuthed', async () => {
   const title = await waitForElement(() => getByLabelText('Post title'));
   expect(title).toBeInTheDocument();
 });
-
-it('stays on Login if server refuses code', async () => {
-  window.history.pushState(
-    {},
-    'Test Title',
-    `${window.location}?code=456&me=rich&state=Bort!`,
-  );
-  const { getByLabelText } = render(<App />);
-  expect(mockAxios.get).toHaveBeenCalledWith(
-    'https://www.porknachos.com/notifier/auth/callback?code=456',
-  );
-  // act(() =>
-  //   mockAxios.mockResponse(undefined),
-  // );
-  // i can't seem to mock the 'fail' response because it's just a fn
-  // that returns undefined.
-  const website = await waitForElement(() => getByLabelText('Website'));
-  expect(website).toBeInTheDocument();
-});

@@ -55,7 +55,7 @@ const Tags = ({ tags, setTags, arrayOfTags, setArrayOfTags }) => {
       <TagBar className="tag-bar" id="tag-bar" aria-labelledby="tag-bar-label">
         {arrayOfTags &&
           arrayOfTags.map(t => (
-            <TagSpan onClick={handleDeleteClick} key={t}>
+            <TagSpan id={t} onClick={handleDeleteClick} key={t}>
               {' '}
               {`${t}`}
             </TagSpan>
@@ -68,6 +68,7 @@ const Tags = ({ tags, setTags, arrayOfTags, setArrayOfTags }) => {
 Tags.propTypes = {
   tags: PropTypes.string.isRequired,
   setTags: PropTypes.func.isRequired,
+  setArrayOfTags: PropTypes.func.isRequired,
   arrayOfTags: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 

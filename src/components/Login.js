@@ -25,7 +25,7 @@ function Login() {
       <LoginForm onSubmit={handleAuth}>
         <LoginLabel id="me-label" htmlFor="me">
           Website
-          <span>
+          {/* <span>
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -33,7 +33,7 @@ function Login() {
             >
               what's this?
             </a>
-          </span>
+          </span> */}
         </LoginLabel>
         <input
           aria-labelledby="me-label"

@@ -4,6 +4,13 @@ import axios from 'axios';
 // TODO: configurable?
 const url = 'https://www.porknachos.com/notifier';
 
+export const display = (set, message, seconds) => {
+  setTimeout(() => {
+    set('');
+  }, seconds);
+  return set(message);
+};
+
 export const post = obj => {
   // const keys = Object.keys(obj);
   // const neededKeys = ['title', 'arrayOfTags', 'body'];
