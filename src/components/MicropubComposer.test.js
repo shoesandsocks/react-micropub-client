@@ -8,6 +8,7 @@ import {
   fireEvent,
   waitForElement,
   act,
+  getByTestId,
 } from 'react-testing-library';
 
 import MicropubComposer from './MicropubComposer';
@@ -61,7 +62,71 @@ it('renders markdown from input to output', () => {
   expect(getByAltText('a cat')).toBeInTheDocument();
 });
 
-it('clears fields on successful Submit', async () => {
+it('clears fields and displays URL on successful Submit', async () => {
+  const { getByPlaceholderText, getByLabelText, getByText } = render(
+    <MicropubComposer />,
+  );
+  // define our inputs
+  const title = getByPlaceholderText('post title');
+  const body = getByLabelText('Post content');
+  const tags = getByLabelText('Tags');
+  // give the inputs some text (and make sure it takes)
+  fireEvent.change(title, { target: { value: 'my awesome post' } });
+  fireEvent.change(body, { target: { value: 'some great content here' } });
+  fireEvent.change(tags, { target: { value: 'hashbrown' } });
+
+  // hit Submit and see if fields are again empty
+  fireEvent.click(getByText('Submit'));
+
+  // mock response
+  expect(mockAxios.post).toHaveBeenCalledWith(
+    'https://www.porknachos.com/notifier/create',
+    { text: 'some great content here' },
+  );
+  act(() =>
+    mockAxios.mockResponse({
+      data: { error: null, url: 'https://www.example.com/content' },
+      status: 200,
+    }),
+  );
+
+  expect(title.value).toEqual('');
+  expect(body.value).toEqual('');
+  expect(tags.value).toEqual('');
+
+  const successMsg = await waitForElement(() => getByText('Success!'));
+  expect(successMsg).toBeInTheDocument();
+});
+
+it('adds the default tag to array, if not present', async () => {
+  const { getByLabelText, getByText } = render(<MicropubComposer />);
+  const body = getByLabelText('Post content');
+  const tags = getByLabelText('Tags');
+  fireEvent.change(body, { target: { value: 'some great content here' } });
+  fireEvent.change(tags, { target: { value: 'hashbrown, sandwich' } });
+
+  fireEvent.click(getByText('Submit'));
+  const defaultTag = await waitForElement(() => getByText('micro.blog'));
+  expect(defaultTag).toBeInTheDocument();
+});
+
+it('doesn"t add the default tag to array, if already present', async () => {
+  const { getByLabelText, getAllByText, getByText } = render(
+    <MicropubComposer />,
+  );
+  const body = getByLabelText('Post content');
+  const tags = getByLabelText('Tags');
+  fireEvent.change(body, { target: { value: 'some great content here' } });
+  fireEvent.change(tags, {
+    target: { value: 'hashbrown, micro.blog, hotdog, sandwich' },
+  });
+
+  fireEvent.click(getByText('Submit'));
+  const mbs = getAllByText('micro.blog');
+  expect(mbs.length).toEqual(1);
+});
+
+it('displays an error in the message field when Submit fails', async () => {
   const { getByPlaceholderText, getByLabelText, getByText } = render(
     <MicropubComposer />,
   );
@@ -86,10 +151,54 @@ it('clears fields on successful Submit', async () => {
     { text: 'some great content here' },
   );
   act(() =>
-    mockAxios.mockResponse({ data: { err: null, msg: 'ok' }, response: 200 }),
+    mockAxios.mockResponse({
+      data: { error: '400 Unauthorized or Bad Request', url: null },
+      status: 400,
+    }),
   );
 
-  expect(title.value).toEqual('');
-  expect(body.value).toEqual('');
-  expect(tags.value).toEqual('');
+  expect(title.value).toEqual('my awesome post');
+  expect(body.value).toEqual('some great content here');
+  expect(tags.value).toEqual('hashbrown');
+
+  const errorMsg = await waitForElement(() =>
+    getByText('400 Unauthorized or Bad Request'),
+  );
+  expect(errorMsg).toBeInTheDocument();
+});
+
+it('displays an error in the message field when Network is down', async () => {
+  const { getByLabelText, getByText } = render(<MicropubComposer />);
+  const body = getByLabelText('Post content');
+  fireEvent.change(body, { target: { value: 'some great content here' } });
+  fireEvent.click(getByText('Submit'));
+  expect(mockAxios.post).toHaveBeenCalledWith(
+    'https://www.porknachos.com/notifier/create',
+    { text: 'some great content here' },
+  );
+  act(() => mockAxios.mockError({ error: '503 Network Unavailable' }));
+  // act(() => mockAxios.mockError());
+  expect(body.value).toEqual('some great content here');
+  const errorMsg = await waitForElement(
+    () => getByText('503 Network Unavailable'),
+    // getByText('Something went wrong'),
+  );
+  expect(errorMsg).toBeInTheDocument();
+});
+
+it('displays an error in the message field when unknown network error', async () => {
+  const { getByLabelText, getByText } = render(<MicropubComposer />);
+  const body = getByLabelText('Post content');
+  fireEvent.change(body, { target: { value: 'some great content here' } });
+  fireEvent.click(getByText('Submit'));
+  expect(mockAxios.post).toHaveBeenCalledWith(
+    'https://www.porknachos.com/notifier/create',
+    { text: 'some great content here' },
+  );
+  act(() => mockAxios.mockError());
+  expect(body.value).toEqual('some great content here');
+  const errorMsg = await waitForElement(() =>
+    getByText('Something went wrong'),
+  );
+  expect(errorMsg).toBeInTheDocument();
 });

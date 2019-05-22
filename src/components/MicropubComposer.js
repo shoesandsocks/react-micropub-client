@@ -19,7 +19,6 @@ const MicropubComposer = () => {
 
   const handlePost = e => {
     e.preventDefault();
-    // add a default tag TODO: make this configurable?
     if (!arrayOfTags.includes(defaultTag)) {
       setArrayOfTags(arrayOfTags.concat([defaultTag]));
     }
@@ -34,12 +33,11 @@ const MicropubComposer = () => {
         } else {
           const { error } = response.data;
           display(setMessage, error, 15000);
-          console.log(error);
         }
       })
       .catch(err => {
-        console.log(err);
-        display(setMessage, err, 5000);
+        const msg = err.error ? err.error : 'Something went wrong';
+        display(setMessage, msg, 5000);
       });
   };
 
