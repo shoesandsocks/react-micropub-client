@@ -26,7 +26,7 @@ function Login() {
       <LoginForm onSubmit={handleAuth}>
         <LoginLabel id="me-label" htmlFor="me">
           Website
-          {/* <span>
+          <span>
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -34,7 +34,7 @@ function Login() {
             >
               what's this?
             </a>
-          </span> */}
+          </span>
         </LoginLabel>
         <input
           aria-labelledby="me-label"
@@ -43,6 +43,7 @@ function Login() {
           type="text"
           value={address}
           onChange={handleChange}
+          placeholder="your website"
         />
         {/* <input name="clientId" readOnly type="text" className="hidden" value="https://www.rich-text.net"></input>
         <input name="redirectUri" readOnly type="text" className="hidden" value="http://localhost:4004/auth/callback" ></input> */}

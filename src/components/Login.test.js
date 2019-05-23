@@ -1,15 +1,18 @@
 import React from 'react';
-import { render, fireEvent, act, waitForElement } from 'react-testing-library';
-import mockAxios from 'jest-mock-axios';
+import { render, fireEvent, waitForElement } from 'react-testing-library';
+// import mockAxios from 'jest-mock-axios';
 
 import Login from './Login';
 import App from '../App';
 
 it('POST a login correctly', async () => {
-  const { getByLabelText, getByText } = render(<App />);
+  const { getByPlaceholderText, getByText } = render(<App />);
 
   //address must be there if 'Login' component has properly loaded at start of workflow
-  const address = await waitForElement(() => getByLabelText('Website'));
+
+  const address = await waitForElement(() =>
+    getByPlaceholderText('your website'),
+  );
   fireEvent.change(address, { target: { value: 'https://www.rich-text.net' } });
   expect(address.value).toEqual('https://www.rich-text.net');
 
@@ -34,7 +37,7 @@ it('stays on Login if server refuses code', async () => {
     'Test Title',
     `${window.location}?code=456&me=rich&state=Bort!`,
   );
-  const { getByLabelText } = render(<Login />);
+  const { getByText } = render(<Login />);
   // expect(mockAxios.get).toHaveBeenCalledWith(
   //   'https://www.porknachos.com/notifier/auth/callback?code=456',
   // );
@@ -43,6 +46,6 @@ it('stays on Login if server refuses code', async () => {
   // );
   // i can't seem to mock the 'fail' response because it's just a fn
   // that returns undefined.
-  const website = await waitForElement(() => getByLabelText('Website'));
+  const website = await waitForElement(() => getByText('Website'));
   expect(website).toBeInTheDocument();
 });
