@@ -8,7 +8,8 @@ function Login() {
   const [address, setAddress] = useState('');
   const handleChange = e => setAddress(e.target.value);
 
-  const handleAuth = () => {
+  const handleAuth = e => {
+    e.preventDefault();
     getAuthed(address)
       .then(response => {
         // console.log(response);

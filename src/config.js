@@ -1,1 +1,1 @@
-export const defaultTag = process.env.REACT_APP_DEFAULT_TAG || 'microblog';
+// export const defaultTag = process.env.REACT_APP_DEFAULT_TAG || 'microblog';

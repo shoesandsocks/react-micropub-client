@@ -12,16 +12,23 @@ export const display = (set, message, seconds) => {
 };
 
 export const post = obj => {
-  // const keys = Object.keys(obj);
-  // const neededKeys = ['title', 'arrayOfTags', 'body'];
-  // const all = neededKeys.every(key => keys.includes(key));
-  // if (!all) return false;
+  const keys = Object.keys(obj);
+  const neededKeys = ['title', 'arrayOfTags', 'body'];
+  const all = neededKeys.every(key => keys.includes(key));
+  if (!all) return false;
 
-  // TODO: the notifier server is only handling "text"for short-posts right now
-  const temporaryTransform = {
+  const textOnly = {
     text: obj.body,
+    tags: obj.arrayOfTags || [],
   };
-  return axios.post(`${url}/create`, temporaryTransform);
+
+  const networkObject = {
+    text: obj.body,
+    tags: obj.arrayOfTags,
+    title: obj.title,
+  };
+  if (obj.title === '') return axios.post(`${url}/create`, textOnly);
+  return axios.post(`${url}/create`, networkObject);
 };
 
 export const processTags = (

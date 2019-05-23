@@ -8,7 +8,6 @@ import Tags from './Tags';
 import Output from './Output';
 
 import { post, display } from '../funcs';
-import { defaultTag } from '../config';
 
 const MicropubComposer = () => {
   const [title, setTitle] = useState('');
@@ -19,9 +18,6 @@ const MicropubComposer = () => {
 
   const handlePost = e => {
     e.preventDefault();
-    if (!arrayOfTags.includes(defaultTag)) {
-      setArrayOfTags(arrayOfTags.concat([defaultTag]));
-    }
     post({ title, body, arrayOfTags })
       .then(response => {
         if (response.status === 200) {
