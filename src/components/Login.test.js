@@ -23,7 +23,7 @@ it('POST a login correctly', async () => {
   //   'https://www.porknachos.com/notifier/auth',
   //   {
   //     clientId: 'https://www.rich-text.net',
-  //     redirectUri: 'http://localhost:3000/',
+  //     redirectUri: 'http://localhost:3000/', // https://post.porknachos.com/
   //     me: 'https://www.rich-text.net',
   //     state: 'Bort!',
   //   },

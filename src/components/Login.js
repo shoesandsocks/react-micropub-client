@@ -45,8 +45,6 @@ function Login() {
           onChange={handleChange}
           placeholder="your website"
         />
-        {/* <input name="clientId" readOnly type="text" className="hidden" value="https://www.rich-text.net"></input>
-        <input name="redirectUri" readOnly type="text" className="hidden" value="http://localhost:4004/auth/callback" ></input> */}
         <button type="button" onClick={handleAuth} value="Submit">
           log me in
         </button>
