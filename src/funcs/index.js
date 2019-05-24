@@ -82,25 +82,26 @@ export const checkForCode = (params, setIsAuthed, setCheckingAuth) => {
   const urlParams = new URLSearchParams(params);
   if (needed.every(param => urlParams.has(param))) {
     const code = urlParams.get('code');
-    // TODO: what am i supposed to do with state & me?
-    // const me = urlParams.get('me');
-    // const state = urlParams.get('state');
+    const me = urlParams.get('me');
+    const state = urlParams.get('state');
     const authServerCb = 'https://www.porknachos.com/notifier/auth/callback';
-    axios.get(`${authServerCb}?code=${code}`).then(res => {
-      const { err } = res.data;
-      if (err) {
-        //
-        setCheckingAuth(false);
-        //
-        return undefined;
-      } else {
-        setIsAuthed(true);
-        //
-        setCheckingAuth(false);
-        //
-        window.history.pushState(null, document.title, '/');
-      }
-    });
+    axios
+      .get(`${authServerCb}?code=${code}&me=${me}&state=${state}`)
+      .then(res => {
+        const { err } = res.data;
+        if (err) {
+          //
+          setCheckingAuth(false);
+          //
+          return undefined;
+        } else {
+          setIsAuthed(true);
+          //
+          setCheckingAuth(false);
+          //
+          window.history.pushState(null, document.title, '/');
+        }
+      });
   } else {
     //
     setCheckingAuth(false);
