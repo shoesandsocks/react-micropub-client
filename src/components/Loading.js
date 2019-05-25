@@ -11,9 +11,9 @@ const Page = styled.div`
   background: ${blueGradient};
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  font: 3rem Courier;
+  font: 1rem Courier;
   color: #eee;
 `;
 
@@ -28,7 +28,6 @@ const counterClockwise = keyframes`
 `;
 
 const Spinner = styled.div`
-  /* background: white; */
   animation: ${clockwise} 1.5s linear infinite;
   display: block;
   height: 2em;
@@ -36,13 +35,13 @@ const Spinner = styled.div`
   width: 2em;
   border: 0.2em solid transparent;
   border-radius: 50%;
-  border-top-color: darkkhaki;
+  border-top-color: #eee;
   margin: auto;
   &::before,
   &::after {
     border: 0.2em solid transparent;
     border-radius: 50%;
-    border-top-color: darkkhaki;
+    border-top-color: #eee;
     margin: auto;
     content: '';
     position: absolute;
