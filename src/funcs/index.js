@@ -90,31 +90,22 @@ export const checkForCode = (params, setIsAuthed, setCheckingAuth) => {
       .then(res => {
         const { err } = res.data;
         if (err) {
-          //
           setCheckingAuth(false);
-          //
           return undefined;
         } else {
           setIsAuthed(true);
-          //
           setCheckingAuth(false);
-          //
           window.history.pushState(null, document.title, '/');
         }
       });
   } else {
-    //
     setCheckingAuth(false);
-    //
     return undefined;
   }
 };
 
 export const renderTags = arr => {
-  if (!arr) {
-    return null;
-  }
-  if (arr.length < 1) {
+  if (!arr || arr.length < 1) {
     return null;
   }
   return arr.map(tag => <span key={tag}>{tag}, </span>);

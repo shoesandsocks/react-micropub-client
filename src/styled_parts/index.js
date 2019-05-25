@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 
-const blueGradient = 'linear-gradient(0deg, #369 50%, #389 100%)';
+export const blueGradient = 'linear-gradient(0deg, #369 50%, #389 100%)';
 
 const flyIn = keyframes`
   0% {

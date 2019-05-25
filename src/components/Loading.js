@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 
 import Pineandvine from './Pineandvine';
-
+import { blueGradient } from '../styled_parts';
 const Page = styled.div`
   height: 95vh;
   width: 100%;
-  background: black;
+  background: ${blueGradient};
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
