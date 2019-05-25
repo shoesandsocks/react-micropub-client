@@ -13,7 +13,7 @@ const Page = styled.div`
   flex-flow: column nowrap;
   justify-content: space-around;
   align-items: center;
-  font: 1rem Courier;
+  font-size: 3rem;
   color: #eee;
 `;
 
@@ -36,7 +36,6 @@ const Spinner = styled.div`
   border: 0.2em solid transparent;
   border-radius: 50%;
   border-top-color: #eee;
-  margin: auto;
   &::before,
   &::after {
     border: 0.2em solid transparent;
@@ -62,12 +61,16 @@ const Spinner = styled.div`
   }
 `;
 
+const Text = styled.p`
+  font: 2rem Arial, Helvetica;
+`;
+
 const Loading = ({ text }) => {
   return (
     <React.Fragment>
       <Page>
         <Spinner />
-        {text}
+        <Text>{text}</Text>
       </Page>
       <Pineandvine />
     </React.Fragment>
