@@ -8,7 +8,7 @@ import Tags from './Tags';
 import Upload from './Upload';
 import Output from './Output';
 
-import { post, display } from '../funcs';
+import { post, display, imagePost } from '../funcs';
 
 const MicropubComposer = () => {
   const [title, setTitle] = useState('');
@@ -20,23 +20,45 @@ const MicropubComposer = () => {
 
   const handlePost = e => {
     e.preventDefault();
-    post({ title, body, arrayOfTags, file })
-      .then(response => {
-        if (response.status === 200) {
-          let { url } = response.data;
-          const urlLink = `<a target="_blank" rel="noopener noreferrer" href="${url}">Success!</a>`;
-          display(setMessage, urlLink, 30000);
-          [setTitle, setBody, setTags].forEach(func => func(''));
-          setArrayOfTags([]);
-        } else {
-          const { error } = response.data;
-          display(setMessage, error, 15000);
-        }
-      })
-      .catch(err => {
-        const msg = err.error ? err.error : 'Something went wrong';
-        display(setMessage, msg, 5000);
-      });
+    // TODO: de-dupe these, which are identical but for func name and extra key (`file`)
+    if (typeof file.name === 'string') {
+      // there's a File
+      imagePost({ title, body, arrayOfTags, file })
+        .then(response => {
+          if (response.status === 200) {
+            let { url } = response.data;
+            const urlLink = `<a target="_blank" rel="noopener noreferrer" href="${url}">Success!</a>`;
+            display(setMessage, urlLink, 30000);
+            [setTitle, setBody, setTags].forEach(func => func(''));
+            setArrayOfTags([]);
+          } else {
+            const { error } = response.data;
+            display(setMessage, error, 15000);
+          }
+        })
+        .catch(err => {
+          const msg = err.error ? err.error : 'Something went wrong';
+          display(setMessage, msg, 5000);
+        });
+    } else {
+      post({ title, body, arrayOfTags })
+        .then(response => {
+          if (response.status === 200) {
+            let { url } = response.data;
+            const urlLink = `<a target="_blank" rel="noopener noreferrer" href="${url}">Success!</a>`;
+            display(setMessage, urlLink, 30000);
+            [setTitle, setBody, setTags].forEach(func => func(''));
+            setArrayOfTags([]);
+          } else {
+            const { error } = response.data;
+            display(setMessage, error, 15000);
+          }
+        })
+        .catch(err => {
+          const msg = err.error ? err.error : 'Something went wrong';
+          display(setMessage, msg, 5000);
+        });
+    }
   };
 
   return (

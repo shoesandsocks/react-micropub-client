@@ -4,6 +4,11 @@ import axios from 'axios';
 // TODO: configurable?
 const url = 'https://www.porknachos.com/notifier';
 
+const hasTheseKeys = (array, obj) => {
+  const keys = Object.keys(obj);
+  return array.every(key => keys.includes(key));
+};
+
 export const display = (set, message, seconds) => {
   setTimeout(() => {
     set('');
@@ -11,26 +16,32 @@ export const display = (set, message, seconds) => {
   return set(message);
 };
 
+export const imagePost = obj => {
+  if (!hasTheseKeys(['title', 'arrayOfTags', 'body', 'file'])) {
+    return { error: 'Missing key(s)' };
+  }
+  const formData = new FormData();
+  for (const key in obj) {
+    formData.append(key, obj[key]);
+  }
+  return axios.post(`${url}/create/form`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+
 export const post = obj => {
-  const keys = Object.keys(obj);
-  const neededKeys = ['title', 'arrayOfTags', 'body', 'file'];
-  const all = neededKeys.every(key => keys.includes(key));
-  if (!all) return false;
-
-  console.log(obj);
-  const textOnly = {
-    text: obj.body,
-    tags: obj.arrayOfTags || [],
+  if (!hasTheseKeys(['title', 'arrayOfTags', 'body'])) {
+    return { error: 'Missing key(s)' };
+  }
+  const { body, arrayOfTags, title } = obj;
+  const postObject = {
+    text: body,
+    tags: arrayOfTags || [],
   };
-
-  const networkObject = {
-    text: obj.body,
-    tags: obj.arrayOfTags,
-    title: obj.title,
-    file: obj.file,
-  };
-  if (obj.title === '') return axios.post(`${url}/create`, textOnly);
-  return axios.post(`${url}/create`, networkObject);
+  if (title !== '') {
+    postObject.title = title;
+  }
+  return axios.post(`${url}/create`, postObject);
 };
 
 export const processTags = (
@@ -65,7 +76,9 @@ export const processTags = (
 export const getAuthed = address => {
   // TODO: do these *need* to come from the form? b/c different for others?
   const clientId = 'https://www.rich-text.net';
-  const redirectUri = 'https://post.porknachos.com/';
+
+  const redirectUri = 'http://localhost:3000/';
+  // const redirectUri = 'https://post.porknachos.com/';
   return new Promise(function(resolve, reject) {
     axios
       .post(`${url}/auth`, {
