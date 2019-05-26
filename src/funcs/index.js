@@ -17,7 +17,7 @@ export const display = (set, message, seconds) => {
 };
 
 export const imagePost = obj => {
-  if (!hasTheseKeys(['title', 'arrayOfTags', 'body', 'file'])) {
+  if (!hasTheseKeys(['title', 'arrayOfTags', 'body', 'file'], obj)) {
     return { error: 'Missing key(s)' };
   }
   const formData = new FormData();
@@ -30,7 +30,7 @@ export const imagePost = obj => {
 };
 
 export const post = obj => {
-  if (!hasTheseKeys(['title', 'arrayOfTags', 'body'])) {
+  if (!hasTheseKeys(['title', 'arrayOfTags', 'body'], obj)) {
     return { error: 'Missing key(s)' };
   }
   const { body, arrayOfTags, title } = obj;
