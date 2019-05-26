@@ -17,6 +17,7 @@ export const post = obj => {
   const all = neededKeys.every(key => keys.includes(key));
   if (!all) return false;
 
+  console.log(obj);
   const textOnly = {
     text: obj.body,
     tags: obj.arrayOfTags || [],
