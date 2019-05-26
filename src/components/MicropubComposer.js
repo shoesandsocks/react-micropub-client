@@ -5,6 +5,7 @@ import MessageBar from './MessageBar';
 import Title from './Title';
 import Body from './Body';
 import Tags from './Tags';
+import Upload from './Upload';
 import Output from './Output';
 
 import { post, display } from '../funcs';
@@ -13,12 +14,13 @@ const MicropubComposer = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [tags, setTags] = useState('');
+  const [file, setFile] = useState(null);
   const [arrayOfTags, setArrayOfTags] = useState([]);
   const [message, setMessage] = useState('');
 
   const handlePost = e => {
     e.preventDefault();
-    post({ title, body, arrayOfTags })
+    post({ title, body, arrayOfTags, file })
       .then(response => {
         if (response.status === 200) {
           let { url } = response.data;
@@ -44,6 +46,7 @@ const MicropubComposer = () => {
         <Form onSubmit={handlePost}>
           <Title text={title} change={setTitle} />
           <Body text={body} change={setBody} />
+          <Upload setFile={setFile} />
           <Tags
             tags={tags}
             arrayOfTags={arrayOfTags}
@@ -59,7 +62,12 @@ const MicropubComposer = () => {
             Submit
           </Btn>
         </Form>
-        <Output body={body} title={title} arrayOfTags={arrayOfTags} />
+        <Output
+          body={body}
+          title={title}
+          arrayOfTags={arrayOfTags}
+          file={file}
+        />
       </ComposerWrap>
     </React.Fragment>
   );
