@@ -13,7 +13,7 @@ export const display = (set, message, seconds) => {
 
 export const post = obj => {
   const keys = Object.keys(obj);
-  const neededKeys = ['title', 'arrayOfTags', 'body'];
+  const neededKeys = ['title', 'arrayOfTags', 'body', 'file'];
   const all = neededKeys.every(key => keys.includes(key));
   if (!all) return false;
 
@@ -26,6 +26,7 @@ export const post = obj => {
     text: obj.body,
     tags: obj.arrayOfTags,
     title: obj.title,
+    file: obj.file,
   };
   if (obj.title === '') return axios.post(`${url}/create`, textOnly);
   return axios.post(`${url}/create`, networkObject);

@@ -12,7 +12,7 @@ const Login = React.lazy(() => import('./components/Login'));
 
 function App() {
   const [checkingAuth, setCheckingAuth] = useState(true);
-  const [isAuthed, setIsAuthed] = useState(true);
+  const [isAuthed, setIsAuthed] = useState(false);
 
   useEffect(() => {
     checkForCode(window.location.search, setIsAuthed, setCheckingAuth);
