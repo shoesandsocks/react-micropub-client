@@ -25,7 +25,7 @@ const Output = ({ body, title, arrayOfTags, file }) => {
       </InputLabel>
       <div>
         <PreviewTitle>{title}</PreviewTitle>
-        <img src={src} alt="" style={{ maxWidth: '350px' }} />
+        <img src={src} alt="" style={{ maxWidth: '100%' }} />
         <PreviewBody
           id="preview"
           aria-labelledby="preview-id"
