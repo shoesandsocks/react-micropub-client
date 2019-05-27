@@ -31,6 +31,7 @@ const MicropubComposer = () => {
             display(setMessage, urlLink, 30000);
             [setTitle, setBody, setTags].forEach(func => func(''));
             setArrayOfTags([]);
+            setFile(null);
           } else {
             const { error } = response.data;
             display(setMessage, error, 15000);
