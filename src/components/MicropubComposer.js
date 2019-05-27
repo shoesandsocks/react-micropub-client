@@ -21,7 +21,7 @@ const MicropubComposer = () => {
   const handlePost = e => {
     e.preventDefault();
     // TODO: de-dupe these, which are identical but for func name and extra key (`file`)
-    if (typeof file.name === 'string') {
+    if (file && typeof file.name === 'string') {
       // there's a File
       imagePost({ title, body, arrayOfTags, file })
         .then(response => {
