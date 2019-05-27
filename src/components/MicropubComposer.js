@@ -4,6 +4,7 @@ import { ComposerWrap, Btn, Form } from '../styled_parts';
 import MessageBar from './MessageBar';
 import Title from './Title';
 import Body from './Body';
+import AltText from './AltText';
 import Tags from './Tags';
 import Upload from './Upload';
 import Output from './Output';
@@ -14,6 +15,7 @@ const MicropubComposer = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [tags, setTags] = useState('');
+  const [altText, setAltText] = useState('');
   const [file, setFile] = useState(null);
   const [arrayOfTags, setArrayOfTags] = useState([]);
   const [message, setMessage] = useState('');
@@ -23,13 +25,13 @@ const MicropubComposer = () => {
     // TODO: de-dupe these, which are identical but for func name and extra key (`file`)
     if (file && typeof file.name === 'string') {
       // there's a File
-      imagePost({ title, body, arrayOfTags, file })
+      imagePost({ title, body, arrayOfTags, file, altText })
         .then(response => {
           if (response.status === 200) {
             let { url } = response.data;
             const urlLink = `<a target="_blank" rel="noopener noreferrer" href="${url}">Success!</a>`;
             display(setMessage, urlLink, 30000);
-            [setTitle, setBody, setTags].forEach(func => func(''));
+            [setTitle, setBody, setTags, setAltText].forEach(func => func(''));
             setArrayOfTags([]);
             setFile(null);
           } else {
@@ -48,7 +50,7 @@ const MicropubComposer = () => {
             let { url } = response.data;
             const urlLink = `<a target="_blank" rel="noopener noreferrer" href="${url}">Success!</a>`;
             display(setMessage, urlLink, 30000);
-            [setTitle, setBody, setTags].forEach(func => func(''));
+            [setTitle, setBody, setTags, setAltText].forEach(func => func(''));
             setArrayOfTags([]);
           } else {
             const { error } = response.data;
@@ -70,6 +72,7 @@ const MicropubComposer = () => {
           <Title text={title} change={setTitle} />
           <Body text={body} change={setBody} />
           <Upload setFile={setFile} />
+          <AltText altText={altText} change={setAltText} />
           <Tags
             tags={tags}
             arrayOfTags={arrayOfTags}

@@ -17,7 +17,7 @@ export const display = (set, message, seconds) => {
 };
 
 export const imagePost = obj => {
-  if (!hasTheseKeys(['title', 'arrayOfTags', 'body', 'file'], obj)) {
+  if (!hasTheseKeys(['title', 'arrayOfTags', 'body', 'file', 'altText'], obj)) {
     return { error: 'Missing key(s)' };
   }
   const formData = new FormData();
