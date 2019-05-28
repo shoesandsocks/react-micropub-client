@@ -77,8 +77,8 @@ export const getAuthed = address => {
   // TODO: do these *need* to come from the form? b/c different for others?
   const clientId = 'https://www.rich-text.net';
 
-  const redirectUri = 'http://localhost:3000/';
-  // const redirectUri = 'https://post.porknachos.com/';
+  // const redirectUri = 'http://localhost:3000/';
+  const redirectUri = 'https://post.porknachos.com/';
   return new Promise(function(resolve, reject) {
     axios
       .post(`${url}/auth`, {
