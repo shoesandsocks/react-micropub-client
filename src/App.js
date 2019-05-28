@@ -16,7 +16,9 @@ function App() {
   const [me, setMe] = useState('');
 
   useEffect(() => {
-    checkForCookie(setIsAuthed, setMe);
+    if (!isAuthed) {
+      checkForCookie(setIsAuthed, setMe);
+    }
     checkForCode(window.location.search, setIsAuthed, setCheckingAuth);
   }, [isAuthed]);
 
