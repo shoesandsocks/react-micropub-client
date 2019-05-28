@@ -1,6 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 
+const transport = axios.create({
+  withCredentials: true,
+});
+
 // TODO: configurable?
 const url = 'https://www.porknachos.com/notifier';
 
@@ -24,7 +28,7 @@ export const imagePost = obj => {
   for (const key in obj) {
     formData.append(key, obj[key]);
   }
-  return axios.post(`${url}/create/form`, formData, {
+  return transport.post(`${url}/create/form`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 };
@@ -41,7 +45,7 @@ export const post = obj => {
   if (title !== '') {
     postObject.title = title;
   }
-  return axios.post(`${url}/create`, postObject);
+  return transport.post(`${url}/create`, postObject);
 };
 
 export const processTags = (
@@ -80,7 +84,7 @@ export const getAuthed = address => {
   // const redirectUri = 'http://localhost:3000/';
   const redirectUri = 'https://post.porknachos.com/';
   return new Promise(function(resolve, reject) {
-    axios
+    transport
       .post(`${url}/auth`, {
         clientId,
         redirectUri,
@@ -100,7 +104,7 @@ export const checkForCode = (params, setIsAuthed, setCheckingAuth) => {
     const me = urlParams.get('me');
     const state = urlParams.get('state');
     const authServerCb = 'https://www.porknachos.com/notifier/auth/callback';
-    axios
+    transport
       .get(`${authServerCb}?code=${code}&me=${me}&state=${state}`)
       .then(res => {
         const { err } = res.data;
