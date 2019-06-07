@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import { ComposerWrap, Btn, Form } from '../styled_parts';
 import MessageBar from './MessageBar';
@@ -12,7 +12,7 @@ import Output from './Output';
 
 import { post, display, imagePost } from '../funcs';
 
-const MicropubComposer = ({ me }) => {
+const MicropubComposer = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [tags, setTags] = useState('');
@@ -67,7 +67,7 @@ const MicropubComposer = ({ me }) => {
 
   return (
     <React.Fragment>
-      <MessageBar message={message} me={me} />
+      <MessageBar message={message} />
       <ComposerWrap>
         <Form onSubmit={handlePost}>
           <Title text={title} change={setTitle} />
@@ -100,8 +100,8 @@ const MicropubComposer = ({ me }) => {
   );
 };
 
-MicropubComposer.propTypes = {
-  me: PropTypes.string.isRequired,
-};
+// MicropubComposer.propTypes = {
+//   me: PropTypes.string.isRequired,
+// };
 
 export default MicropubComposer;

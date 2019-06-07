@@ -129,13 +129,3 @@ export const renderTags = arr => {
   }
   return arr.map(tag => <span key={tag}>{tag}, </span>);
 };
-
-export const checkForCookie = (setIsAuthed, setMe) =>
-  transport.get(`${url}/auth/amihere`).then(res => {
-    console.log(res);
-    if (res.data.cookie && res.data.me) {
-      setMe(res.data.me);
-      return setIsAuthed(true);
-    }
-    return setIsAuthed(false);
-  });

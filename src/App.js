@@ -4,7 +4,7 @@ import Pineandvine from './components/Pineandvine';
 import Loading from './components/Loading';
 import ErrorBoundary from './components/ErrorBoundary';
 
-import { checkForCode, checkForCookie } from './funcs';
+import { checkForCode } from './funcs';
 const MicropubComposer = React.lazy(() =>
   import('./components/MicropubComposer'),
 );
@@ -13,12 +13,8 @@ const Login = React.lazy(() => import('./components/Login'));
 function App() {
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [isAuthed, setIsAuthed] = useState(false);
-  const [me, setMe] = useState('');
 
   useEffect(() => {
-    if (!isAuthed) {
-      checkForCookie(setIsAuthed, setMe);
-    }
     checkForCode(window.location.search, setIsAuthed, setCheckingAuth);
   }, [isAuthed]);
 
@@ -29,7 +25,7 @@ function App() {
       <ErrorBoundary>
         <Suspense fallback={<Loading text="loading..." />}>
           {isAuthed ? (
-            <MicropubComposer me={me} />
+            <MicropubComposer />
           ) : (
             <Login setIsAuthed={setIsAuthed} />
           )}
