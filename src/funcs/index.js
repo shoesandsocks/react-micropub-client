@@ -1,8 +1,17 @@
 import React from 'react';
 import axios from 'axios';
 
+const transport = axios.create({
+  withCredentials: true,
+});
+
 // TODO: configurable?
 const url = 'https://www.porknachos.com/notifier';
+
+const hasTheseKeys = (array, obj) => {
+  const keys = Object.keys(obj);
+  return array.every(key => keys.includes(key));
+};
 
 export const display = (set, message, seconds) => {
   setTimeout(() => {
@@ -11,24 +20,32 @@ export const display = (set, message, seconds) => {
   return set(message);
 };
 
+export const imagePost = obj => {
+  if (!hasTheseKeys(['title', 'arrayOfTags', 'body', 'file', 'altText'], obj)) {
+    return { error: 'Missing key(s)' };
+  }
+  const formData = new FormData();
+  for (const key in obj) {
+    formData.append(key, obj[key]);
+  }
+  return transport.post(`${url}/create/form`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+
 export const post = obj => {
-  const keys = Object.keys(obj);
-  const neededKeys = ['title', 'arrayOfTags', 'body'];
-  const all = neededKeys.every(key => keys.includes(key));
-  if (!all) return false;
-
-  const textOnly = {
-    text: obj.body,
-    tags: obj.arrayOfTags || [],
+  if (!hasTheseKeys(['title', 'arrayOfTags', 'body'], obj)) {
+    return { error: 'Missing key(s)' };
+  }
+  const { body, arrayOfTags, title } = obj;
+  const postObject = {
+    text: body,
+    tags: arrayOfTags || [],
   };
-
-  const networkObject = {
-    text: obj.body,
-    tags: obj.arrayOfTags,
-    title: obj.title,
-  };
-  if (obj.title === '') return axios.post(`${url}/create`, textOnly);
-  return axios.post(`${url}/create`, networkObject);
+  if (title !== '') {
+    postObject.title = title;
+  }
+  return transport.post(`${url}/create`, postObject);
 };
 
 export const processTags = (
@@ -63,9 +80,11 @@ export const processTags = (
 export const getAuthed = address => {
   // TODO: do these *need* to come from the form? b/c different for others?
   const clientId = 'https://www.rich-text.net';
+
+  // const redirectUri = 'http://localhost:3000/';
   const redirectUri = 'https://post.porknachos.com/';
   return new Promise(function(resolve, reject) {
-    axios
+    transport
       .post(`${url}/auth`, {
         clientId,
         redirectUri,
@@ -77,7 +96,7 @@ export const getAuthed = address => {
   });
 };
 
-export const checkForCode = (params, setIsAuthed, setCheckingAuth) => {
+export const checkForCode = (params, setIsAuthed, setCheckingAuth, setMe) => {
   const needed = ['code', 'me', 'state'];
   const urlParams = new URLSearchParams(params);
   if (needed.every(param => urlParams.has(param))) {
@@ -85,7 +104,7 @@ export const checkForCode = (params, setIsAuthed, setCheckingAuth) => {
     const me = urlParams.get('me');
     const state = urlParams.get('state');
     const authServerCb = 'https://www.porknachos.com/notifier/auth/callback';
-    axios
+    transport
       .get(`${authServerCb}?code=${code}&me=${me}&state=${state}`)
       .then(res => {
         const { err } = res.data;
@@ -93,15 +112,31 @@ export const checkForCode = (params, setIsAuthed, setCheckingAuth) => {
           setCheckingAuth(false);
           return undefined;
         } else {
+          setMe(me);
           setIsAuthed(true);
           setCheckingAuth(false);
           window.history.pushState(null, document.title, '/');
         }
       });
   } else {
-    setCheckingAuth(false);
-    return undefined;
+    return cookieCheck(setIsAuthed, setCheckingAuth, setMe);
   }
+};
+
+const cookieCheck = (setIsAuthed, setCheckingAuth, setMe) => {
+  transport.get(`${url}/auth/cookie`).then(response => {
+    console.log(response.data);
+    const { me, error } = response.data;
+    if (me) {
+      setMe(me);
+      setCheckingAuth(false);
+      setIsAuthed(true);
+    } else {
+      console.log(error);
+      setCheckingAuth(false);
+      return undefined;
+    }
+  });
 };
 
 export const renderTags = arr => {

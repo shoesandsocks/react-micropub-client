@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Msg = styled.div`
@@ -16,6 +17,17 @@ const Msg = styled.div`
   }
 `;
 
-export default ({ message }) => (
-  <Msg dangerouslySetInnerHTML={{ __html: message }} />
-);
+const MessageBar = ({ message, me }) => {
+  return message ? (
+    <Msg dangerouslySetInnerHTML={{ __html: message }} />
+  ) : (
+    <Msg>posting to ${me}</Msg>
+  );
+};
+
+MessageBar.propTypes = {
+  me: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+};
+
+export default MessageBar;

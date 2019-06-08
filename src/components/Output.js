@@ -11,7 +11,13 @@ import {
 
 import { renderTags } from '../funcs';
 
-const Output = ({ body, title, arrayOfTags }) => {
+const Output = ({ body, title, arrayOfTags, file }) => {
+  let src;
+  try {
+    src = URL.createObjectURL(file);
+  } catch {
+    src = '';
+  }
   return (
     <OutputWrap>
       <InputLabel id="preview-id" htmlFor="preview">
@@ -19,6 +25,7 @@ const Output = ({ body, title, arrayOfTags }) => {
       </InputLabel>
       <div>
         <PreviewTitle>{title}</PreviewTitle>
+        <img src={src} alt="" style={{ maxWidth: '100%' }} />
         <PreviewBody
           id="preview"
           aria-labelledby="preview-id"
