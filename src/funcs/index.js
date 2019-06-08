@@ -124,7 +124,7 @@ export const checkForCode = (params, setIsAuthed, setCheckingAuth, setMe) => {
 };
 
 const cookieCheck = (setIsAuthed, setCheckingAuth, setMe) => {
-  transport.get('/cookie').then(response => {
+  transport.get(`${url}/auth/cookie`).then(response => {
     console.log(response.data);
     const { me, error } = response.data;
     if (me) {
