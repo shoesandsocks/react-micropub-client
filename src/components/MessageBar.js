@@ -21,7 +21,7 @@ const MessageBar = ({ message, me }) => {
   return message ? (
     <Msg dangerouslySetInnerHTML={{ __html: message }} />
   ) : (
-    <Msg>posting to ${me}</Msg>
+    <Msg>posting to {me}</Msg>
   );
 };
 
