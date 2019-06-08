@@ -13,9 +13,10 @@ const Login = React.lazy(() => import('./components/Login'));
 function App() {
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [isAuthed, setIsAuthed] = useState(false);
+  const [me, setMe] = useState('');
 
   useEffect(() => {
-    checkForCode(window.location.search, setIsAuthed, setCheckingAuth);
+    checkForCode(window.location.search, setIsAuthed, setCheckingAuth, setMe);
   }, [isAuthed]);
 
   return checkingAuth ? (
@@ -25,7 +26,7 @@ function App() {
       <ErrorBoundary>
         <Suspense fallback={<Loading text="loading..." />}>
           {isAuthed ? (
-            <MicropubComposer />
+            <MicropubComposer me={me} />
           ) : (
             <Login setIsAuthed={setIsAuthed} />
           )}

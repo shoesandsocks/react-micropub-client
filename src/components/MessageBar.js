@@ -17,12 +17,16 @@ const Msg = styled.div`
   }
 `;
 
-const MessageBar = ({ message }) => {
-  return message ? <Msg dangerouslySetInnerHTML={{ __html: message }} /> : null;
+const MessageBar = ({ message, me }) => {
+  return message ? (
+    <Msg dangerouslySetInnerHTML={{ __html: message }} />
+  ) : (
+    <Msg>posting to ${me}</Msg>
+  );
 };
 
 MessageBar.propTypes = {
-  // me: PropTypes.string.isRequired,
+  me: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
 };
 

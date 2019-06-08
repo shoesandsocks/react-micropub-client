@@ -96,7 +96,7 @@ export const getAuthed = address => {
   });
 };
 
-export const checkForCode = (params, setIsAuthed, setCheckingAuth) => {
+export const checkForCode = (params, setIsAuthed, setCheckingAuth, setMe) => {
   const needed = ['code', 'me', 'state'];
   const urlParams = new URLSearchParams(params);
   if (needed.every(param => urlParams.has(param))) {
@@ -112,15 +112,31 @@ export const checkForCode = (params, setIsAuthed, setCheckingAuth) => {
           setCheckingAuth(false);
           return undefined;
         } else {
+          setMe(me);
           setIsAuthed(true);
           setCheckingAuth(false);
           window.history.pushState(null, document.title, '/');
         }
       });
   } else {
-    setCheckingAuth(false);
-    return undefined;
+    return cookieCheck(setIsAuthed, setCheckingAuth, setMe);
   }
+};
+
+const cookieCheck = (setIsAuthed, setCheckingAuth, setMe) => {
+  transport.get('/cookie').then(response => {
+    console.log(response.data);
+    const { me, error } = response.data;
+    if (me) {
+      setMe(me);
+      setCheckingAuth(false);
+      setIsAuthed(true);
+    } else {
+      console.log(error);
+      setCheckingAuth(false);
+      return undefined;
+    }
+  });
 };
 
 export const renderTags = arr => {
