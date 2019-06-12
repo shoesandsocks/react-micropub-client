@@ -14,7 +14,7 @@
     ]
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "eslint-config-prettier": "^4.3.0",
     "husky": "^2.3.0",
     "jest-dom": "^3.2.2",
