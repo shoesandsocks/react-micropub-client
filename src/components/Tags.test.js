@@ -5,7 +5,7 @@ import {
   cleanup,
   fireEvent,
   waitForElement,
-} from 'react-testing-library';
+} from '@testing-library/react';
 
 import Tags from './Tags';
 

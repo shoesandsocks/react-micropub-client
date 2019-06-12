@@ -1,9 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 
-const transport = axios.create({
-  withCredentials: true,
-});
+// const transport = axios.create({
+//   withCredentials: true,
+// });
+axios.defaults.withCredentials = true;
+
+require('dotenv').config();
+const defaultTag = process.env.REACT_APP_DEFAULT_TAG;
 
 // TODO: configurable?
 const url = 'https://www.porknachos.com/notifier';
@@ -28,7 +32,7 @@ export const imagePost = obj => {
   for (const key in obj) {
     formData.append(key, obj[key]);
   }
-  return transport.post(`${url}/create/form`, formData, {
+  return axios.post(`${url}/create/form`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 };
@@ -38,6 +42,9 @@ export const post = obj => {
     return { error: 'Missing key(s)' };
   }
   const { body, arrayOfTags, title } = obj;
+  if (!arrayOfTags.includes(defaultTag)) {
+    arrayOfTags.push(defaultTag);
+  }
   const postObject = {
     text: body,
     tags: arrayOfTags || [],
@@ -45,7 +52,7 @@ export const post = obj => {
   if (title !== '') {
     postObject.title = title;
   }
-  return transport.post(`${url}/create`, postObject);
+  return axios.post(`${url}/create`, postObject);
 };
 
 export const processTags = (
@@ -84,7 +91,7 @@ export const getAuthed = address => {
   // const redirectUri = 'http://localhost:3000/';
   const redirectUri = 'https://post.porknachos.com/';
   return new Promise(function(resolve, reject) {
-    transport
+    axios
       .post(`${url}/auth`, {
         clientId,
         redirectUri,
@@ -104,7 +111,7 @@ export const checkForCode = (params, setIsAuthed, setCheckingAuth, setMe) => {
     const me = urlParams.get('me');
     const state = urlParams.get('state');
     const authServerCb = 'https://www.porknachos.com/notifier/auth/callback';
-    transport
+    axios
       .get(`${authServerCb}?code=${code}&me=${me}&state=${state}`)
       .then(res => {
         const { err } = res.data;
@@ -124,15 +131,15 @@ export const checkForCode = (params, setIsAuthed, setCheckingAuth, setMe) => {
 };
 
 const cookieCheck = (setIsAuthed, setCheckingAuth, setMe) => {
-  transport.get(`${url}/auth/cookie`).then(response => {
-    console.log(response.data);
+  axios.get(`${url}/auth/cookie`).then(response => {
+    // console.log(response.data);
     const { me, error } = response.data;
     if (me) {
       setMe(me);
       setCheckingAuth(false);
       setIsAuthed(true);
     } else {
-      console.log(error);
+      // console.log(error);
       setCheckingAuth(false);
       return undefined;
     }
