@@ -106,23 +106,26 @@ export const getAuthed = address => {
 export const checkForCode = (params, setIsAuthed, setCheckingAuth, setMe) => {
   const needed = ['code', 'me', 'state'];
   const urlParams = new URLSearchParams(params);
+  // console.log('before needed.every: ', params);
   if (needed.every(param => urlParams.has(param))) {
+    // console.log('inside needed.every')
     const code = urlParams.get('code');
     const me = urlParams.get('me');
     const state = urlParams.get('state');
     const authServerCb = 'https://www.porknachos.com/notifier/auth/callback';
-    axios
+    return axios
       .get(`${authServerCb}?code=${code}&me=${me}&state=${state}`)
       .then(res => {
-        const { err } = res.data;
+        const { err, msg } = res.data;
         if (err) {
+          // console.log(msg)
           setCheckingAuth(false);
           return undefined;
         } else {
           setMe(me);
           setIsAuthed(true);
           setCheckingAuth(false);
-          window.history.pushState(null, document.title, '/');
+          return window.history.pushState(null, document.title, '/');
         }
       });
   } else {

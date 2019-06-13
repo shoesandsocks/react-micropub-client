@@ -5,3 +5,11 @@
 import '@testing-library/react/cleanup-after-each';
 // this adds jest-dom's custom assertions
 import 'jest-dom/extend-expect';
+import { cleanup } from '@testing-library/react';
+import mockAxios from 'jest-mock-axios';
+
+afterEach(cleanup);
+afterEach(() => {
+  // cleaning up the mess left behind the previous test
+  mockAxios.reset();
+});

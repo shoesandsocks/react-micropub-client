@@ -14,11 +14,11 @@ function App() {
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [isAuthed, setIsAuthed] = useState(false);
   const [me, setMe] = useState('');
+  // console.log('APPJS: ', window.location.search);
 
   useEffect(() => {
     checkForCode(window.location.search, setIsAuthed, setCheckingAuth, setMe);
   }, [isAuthed]);
-
   return checkingAuth ? (
     <Loading text="authorizing..." />
   ) : (
