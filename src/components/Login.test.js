@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitForElement } from 'react-testing-library';
+import { render, fireEvent, waitForElement } from '@testing-library/react';
 // import mockAxios from 'jest-mock-axios';
 
 import Login from './Login';

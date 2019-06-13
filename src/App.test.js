@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { render, act, waitForElement } from 'react-testing-library';
+import { render, act, waitForElement } from '@testing-library/react';
 import mockAxios from 'jest-mock-axios';
 
 import App from './App';
