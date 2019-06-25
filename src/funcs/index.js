@@ -1,13 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 
+import { defaultTag } from '../config';
+
 // const transport = axios.create({
 //   withCredentials: true,
 // });
 axios.defaults.withCredentials = true;
-
-require('dotenv').config();
-const defaultTag = process.env.REACT_APP_DEFAULT_TAG;
 
 // TODO: configurable?
 const url = 'https://www.porknachos.com/notifier';
