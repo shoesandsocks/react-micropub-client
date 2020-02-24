@@ -27,6 +27,6 @@ it('converts a param code and toggles isAuthed', async () => {
   const title = await waitForElement(() => getByLabelText('Post title'));
   expect(title).toBeInTheDocument();
   expect(mockAxios.get).toHaveBeenCalledWith(
-    'https://www.porknachos.com/notifier/auth/callback?code=123&me=rich&state=Bort!',
+    'https://www.porknachos.com/node/auth/callback?code=123&me=rich&state=Bort!',
   );
 });

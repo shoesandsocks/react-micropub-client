@@ -85,7 +85,7 @@ it('adds default tag, clears fields, and displays URL on successful Submit', asy
 
   // mock response
   expect(mockAxios.post).toHaveBeenCalledWith(
-    'https://www.porknachos.com/notifier/create',
+    'https://www.porknachos.com/node/create',
     {
       text: 'some great content here',
       tags: ['hashbrown', 'micro.blog'],
@@ -125,7 +125,7 @@ it('does NOT add default tag on Succss, if tag already exists', async () => {
 
   // mock response
   expect(mockAxios.post).toHaveBeenCalledWith(
-    'https://www.porknachos.com/notifier/create',
+    'https://www.porknachos.com/node/create',
     {
       text: 'some great content here',
       tags: ['hashbrown', 'micro.blog'],
@@ -168,7 +168,7 @@ it('displays an error in the message field when Submit fails', async () => {
 
   // mock response
   expect(mockAxios.post).toHaveBeenCalledWith(
-    'https://www.porknachos.com/notifier/create',
+    'https://www.porknachos.com/node/create',
     {
       text: 'some great content here',
       tags: ['micro.blog'],
@@ -200,7 +200,7 @@ it('displays an error in the message field when Network is down', async () => {
   fireEvent.change(body, { target: { value: 'some great content here' } });
   fireEvent.click(getByText('Submit'));
   expect(mockAxios.post).toHaveBeenCalledWith(
-    'https://www.porknachos.com/notifier/create',
+    'https://www.porknachos.com/node/create',
     { text: 'some great content here', tags: ['micro.blog'] },
   );
   act(() => mockAxios.mockError({ error: '503 Network Unavailable' }));
@@ -221,7 +221,7 @@ it('displays an error in the message field when unknown network error', async ()
   fireEvent.change(body, { target: { value: 'some great content here' } });
   fireEvent.click(getByText('Submit'));
   expect(mockAxios.post).toHaveBeenCalledWith(
-    'https://www.porknachos.com/notifier/create',
+    'https://www.porknachos.com/node/create',
     { text: 'some great content here', tags: ['micro.blog'] },
   );
   act(() => mockAxios.mockError());

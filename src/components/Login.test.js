@@ -37,7 +37,7 @@ it('POST a login correctly', async () => {
 
   // mock response
   expect(mockAxios.post).toHaveBeenCalledWith(
-    'https://www.porknachos.com/notifier/auth',
+    'https://www.porknachos.com/node/auth',
     {
       clientId: 'https://www.rich-text.net',
       redirectUri: 'https://post.porknachos.com/',
@@ -56,7 +56,7 @@ it('stays on Login if server refuses code', async () => {
     });
   });
   expect(mockAxios.get).toHaveBeenCalledWith(
-    'https://www.porknachos.com/notifier/auth/callback?code=456&me=bort&state=Bort!',
+    'https://www.porknachos.com/node/auth/callback?code=456&me=bort&state=Bort!',
   );
   const website = await waitForElement(() => getByText('Website'));
   expect(website).toBeInTheDocument();

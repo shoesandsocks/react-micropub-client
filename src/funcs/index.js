@@ -9,7 +9,7 @@ import { defaultTag } from '../config';
 axios.defaults.withCredentials = true;
 
 // TODO: configurable?
-const url = 'https://www.porknachos.com/notifier';
+const url = 'https://www.porknachos.com/node/notify';
 
 const hasTheseKeys = (array, obj) => {
   const keys = Object.keys(obj);
@@ -111,7 +111,7 @@ export const checkForCode = (params, setIsAuthed, setCheckingAuth, setMe) => {
     const code = urlParams.get('code');
     const me = urlParams.get('me');
     const state = urlParams.get('state');
-    const authServerCb = 'https://www.porknachos.com/notifier/auth/callback';
+    const authServerCb = 'https://www.porknachos.com/node/auth/callback';
     return axios
       .get(`${authServerCb}?code=${code}&me=${me}&state=${state}`)
       .then(res => {
