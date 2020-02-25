@@ -117,7 +117,7 @@ export const checkForCode = (params, setIsAuthed, setCheckingAuth, setMe) => {
       .then(res => {
         const { err, msg } = res.data;
         if (err) {
-          // console.log(msg)
+          console.log(msg);
           setCheckingAuth(false);
           return undefined;
         } else {
@@ -133,19 +133,22 @@ export const checkForCode = (params, setIsAuthed, setCheckingAuth, setMe) => {
 };
 
 const cookieCheck = (setIsAuthed, setCheckingAuth, setMe) => {
-  axios.get(`${url}/auth/cookie`).then(response => {
-    // console.log(response.data);
-    const { me, error } = response.data;
-    if (me) {
-      setMe(me);
-      setCheckingAuth(false);
-      setIsAuthed(true);
-    } else {
-      // console.log(error);
-      setCheckingAuth(false);
-      return undefined;
-    }
-  });
+  axios
+    .get(`${url}/auth/cookie`)
+    .then(response => {
+      // console.log(response.data);
+      const { me, error } = response.data;
+      if (me) {
+        setMe(me);
+        setCheckingAuth(false);
+        setIsAuthed(true);
+      } else {
+        console.log(error);
+        setCheckingAuth(false);
+        return undefined;
+      }
+    })
+    .catch(e => console.log(e));
 };
 
 export const renderTags = arr => {
