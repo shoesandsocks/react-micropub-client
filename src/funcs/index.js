@@ -9,7 +9,7 @@ import { defaultTag } from '../config';
 axios.defaults.withCredentials = true;
 
 // TODO: configurable?
-const url = 'https://www.porknachos.com/node/notify';
+const url = 'https://www.porknachos.com/node';
 
 const hasTheseKeys = (array, obj) => {
   const keys = Object.keys(obj);
