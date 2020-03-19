@@ -10,13 +10,14 @@ const Upload = ({ setFile }) => {
   const fileRef = useRef();
   const handleChange = () => {
     if (fileRef.current.files && fileRef.current.files.length > 0) {
+      // send it to the endpoint right here // FIXME:
       const formData = new FormData();
       formData.append('file', fileRef.current.files[0]);
       axios.post(`${url}/micropub/media/`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
+
       setFile(fileRef.current.files[0]);
-      // send it to the endpoint right here // FIXME:
     }
   };
   return (
