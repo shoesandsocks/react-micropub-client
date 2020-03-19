@@ -6,18 +6,25 @@ import { InputWrap, InputLabel } from '../styled_parts';
 // TODO: configurable?
 const url = 'https://www.porknachos.com/node';
 
-const Upload = ({ setFile }) => {
+const Upload = ({ setFile, setFileURL }) => {
   const fileRef = useRef();
   const handleChange = () => {
     if (fileRef.current.files && fileRef.current.files.length > 0) {
-      // send it to the endpoint right here // FIXME:
+      // send it to server immediately
       const formData = new FormData();
       formData.append('file', fileRef.current.files[0]);
-      axios.post(`${url}/micropub/media/`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-
-      setFile(fileRef.current.files[0]);
+      axios
+        .post(`${url}/micropub/media/`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
+        .then(r => {
+          setFile(fileRef.current.files[0]);
+          setFileURL(r.url);
+        })
+        .catch(e => {
+          console.log(JSON.stringify(e, null, 4));
+        });
+      // set it into page
     }
   };
   return (

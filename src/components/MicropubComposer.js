@@ -18,6 +18,7 @@ const MicropubComposer = ({ me }) => {
   const [tags, setTags] = useState('');
   const [altText, setAltText] = useState('');
   const [file, setFile] = useState(null);
+  const [fileURL, setFileURL] = useState('');
   const [arrayOfTags, setArrayOfTags] = useState([]);
   const [message, setMessage] = useState('');
 
@@ -26,13 +27,15 @@ const MicropubComposer = ({ me }) => {
     // TODO: de-dupe these, which are identical but for func name and extra key (`file`)
     if (file && typeof file.name === 'string') {
       // there's a File
-      imagePost({ title, body, arrayOfTags, file, altText })
+      imagePost({ title, body, arrayOfTags, fileURL, altText })
         .then(response => {
           if (response.status === 200) {
             let { url } = response.data;
             const urlLink = `<a target="_blank" rel="noopener noreferrer" href="${url}">Success!</a>`;
             display(setMessage, urlLink, 30000);
-            [setTitle, setBody, setTags, setAltText].forEach(func => func(''));
+            [setTitle, setBody, setTags, setAltText, setFileURL].forEach(func =>
+              func(''),
+            );
             setArrayOfTags([]);
             setFile(null);
           } else {
@@ -72,7 +75,7 @@ const MicropubComposer = ({ me }) => {
         <Form onSubmit={handlePost}>
           <Title text={title} change={setTitle} />
           <Body text={body} change={setBody} />
-          <Upload setFile={setFile} />
+          <Upload setFile={setFile} setFileURL={setFileURL} />
           <AltText altText={altText} change={setAltText} />
           <Tags
             tags={tags}
