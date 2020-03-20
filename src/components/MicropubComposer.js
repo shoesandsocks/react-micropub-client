@@ -22,31 +22,31 @@ const MicropubComposer = ({ me }) => {
   const [arrayOfTags, setArrayOfTags] = useState([]);
   const [message, setMessage] = useState('');
 
-  const handlePost = e => {
+  const handlePost = async e => {
     e.preventDefault();
     // TODO: de-dupe these, which are identical but for func name and extra key (`file`)
     if (file && typeof file.name === 'string') {
       // there's a File
-      imagePost({ title, body, arrayOfTags, fileURL, altText })
-        .then(response => {
-          if (response.status === 200) {
-            let { url } = response.data;
-            const urlLink = `<a target="_blank" rel="noopener noreferrer" href="${url}">Success!</a>`;
-            display(setMessage, urlLink, 30000);
-            [setTitle, setBody, setTags, setAltText, setFileURL].forEach(func =>
-              func(''),
-            );
-            setArrayOfTags([]);
-            setFile(null);
-          } else {
-            const { error } = response.data;
-            display(setMessage, error, 15000);
-          }
-        })
-        .catch(err => {
-          const msg = err.error ? err.error : 'Something went wrong';
-          display(setMessage, msg, 5000);
-        });
+      const response = await imagePost({
+        title,
+        body,
+        arrayOfTags,
+        fileURL,
+        altText,
+      });
+      if (response.status === 200) {
+        let { url } = response.data;
+        const urlLink = `<a target="_blank" rel="noopener noreferrer" href="${url}">Success!</a>`;
+        display(setMessage, urlLink, 30000);
+        [setTitle, setBody, setTags, setAltText, setFileURL].forEach(func =>
+          func(''),
+        );
+        setArrayOfTags([]);
+        setFile(null);
+      } else {
+        const { error } = response.data;
+        display(setMessage, error, 15000);
+      }
     } else {
       post({ title, body, arrayOfTags })
         .then(response => {

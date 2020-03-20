@@ -1,8 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 
-import { defaultTag } from '../config';
-
 // const transport = axios.create({
 //   withCredentials: true,
 // });
@@ -24,16 +22,30 @@ export const display = (set, message, seconds) => {
 };
 
 export const imagePost = obj => {
-  if (!hasTheseKeys(['title', 'arrayOfTags', 'body', 'file', 'altText'], obj)) {
+  if (
+    !hasTheseKeys(['title', 'arrayOfTags', 'body', 'fileURL', 'altText'], obj)
+  ) {
     return { error: 'Missing key(s)' };
   }
-  const formData = new FormData();
-  for (const key in obj) {
-    formData.append(key, obj[key]);
+  const { body, arrayOfTags, title, fileURL, altText } = obj;
+
+  const postObject = {
+    text: body,
+    tags: arrayOfTags || [],
+    fileURL,
+    altText,
+  };
+  if (title !== '') {
+    postObject.title = title;
   }
-  return axios.post(`${url}/create/form`, formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  return axios.post(`${url}/create`, postObject);
+  // const formData = new FormData();
+  // for (const key in obj) {
+  //   formData.append(key, obj[key]);
+  // }
+  // return axios.post(`${url}/create/`, formData, {
+  //   headers: { 'Content-Type': 'multipart/form-data' },
+  // });
 };
 
 export const post = obj => {
@@ -41,9 +53,7 @@ export const post = obj => {
     return { error: 'Missing key(s)' };
   }
   const { body, arrayOfTags, title } = obj;
-  if (!arrayOfTags.includes(defaultTag)) {
-    arrayOfTags.push(defaultTag);
-  }
+
   const postObject = {
     text: body,
     tags: arrayOfTags || [],
