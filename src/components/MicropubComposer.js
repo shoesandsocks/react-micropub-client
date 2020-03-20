@@ -34,7 +34,7 @@ const MicropubComposer = ({ me }) => {
         fileURL,
         altText,
       });
-      if (response.status === 200) {
+      if (response.status === 201) {
         let { url } = response.data;
         const urlLink = `<a target="_blank" rel="noopener noreferrer" href="${url}">Success!</a>`;
         display(setMessage, urlLink, 30000);
@@ -44,13 +44,12 @@ const MicropubComposer = ({ me }) => {
         setArrayOfTags([]);
         setFile(null);
       } else {
-        const { error } = response.data;
-        display(setMessage, error, 15000);
+        display(setMessage, 'not created! uh oh.', 15000);
       }
     } else {
       post({ title, body, arrayOfTags })
         .then(response => {
-          if (response.status === 200) {
+          if (response.status === 201) {
             let { url } = response.data;
             const urlLink = `<a target="_blank" rel="noopener noreferrer" href="${url}">Success!</a>`;
             display(setMessage, urlLink, 30000);

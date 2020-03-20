@@ -38,14 +38,11 @@ export const imagePost = obj => {
   if (title !== '') {
     postObject.title = title;
   }
-  return axios.post(`${url}/create`, postObject);
-  // const formData = new FormData();
-  // for (const key in obj) {
-  //   formData.append(key, obj[key]);
-  // }
-  // return axios.post(`${url}/create/`, formData, {
-  //   headers: { 'Content-Type': 'multipart/form-data' },
-  // });
+
+  return axios
+    .post(`${url}/create`, postObject)
+    .then(r => r)
+    .catch(e => console.log(e));
 };
 
 export const post = obj => {
@@ -115,9 +112,7 @@ export const getAuthed = address => {
 export const checkForCode = (params, setIsAuthed, setCheckingAuth, setMe) => {
   const needed = ['code', 'me', 'state'];
   const urlParams = new URLSearchParams(params);
-  // console.log('before needed.every: ', params);
   if (needed.every(param => urlParams.has(param))) {
-    // console.log('inside needed.every')
     const code = urlParams.get('code');
     const me = urlParams.get('me');
     const state = urlParams.get('state');
@@ -146,7 +141,6 @@ const cookieCheck = (setIsAuthed, setCheckingAuth, setMe) => {
   axios
     .get(`${url}/auth/cookie`)
     .then(response => {
-      // console.log(response.data);
       const { me, error } = response.data;
       if (me) {
         setMe(me);

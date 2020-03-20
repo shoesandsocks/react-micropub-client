@@ -18,8 +18,14 @@ const Upload = ({ setFile, setFileURL }) => {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
         .then(r => {
-          setFile(fileRef.current.files[0]);
-          setFileURL(r.url);
+          if (r && r.data && r.data.url) {
+            setFile(fileRef.current.files[0]);
+            setFileURL(r.data.url);
+          } else {
+            console.log(
+              'somthing went wrong uploading that file to pn filestorage',
+            );
+          }
         })
         .catch(e => {
           console.log(JSON.stringify(e, null, 4));
