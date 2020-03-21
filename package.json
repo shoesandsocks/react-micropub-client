@@ -22,11 +22,11 @@
     "jest-dom": "^3.2.2",
     "jest-mock-axios": "^3.0.0",
     "lint-staged": "^8.1.7",
-    "marked": "^0.8.0",
+    "marked": "^0.8.1",
     "prettier": "^1.17.1",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "react-scripts": "^3.4.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.1",
     "styled-components": "^4.2.0"
   },
   "scripts": {
